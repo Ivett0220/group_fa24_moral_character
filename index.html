@@ -61,6 +61,7 @@
   var trial = {
     type: jsPsychSurveyHtmlForm,
     html: `
+      <label>Enter your Participant ID (PID): <input name="pid" type="text" required></label><br><br>
       <label>What is your age? <input name="age" type="number" required></label><br><br>
       <label>What is your gender? 
         <select name="gender" required>
@@ -73,7 +74,7 @@
     `
   };
   timeline.push(trial);
-  
+
   // here's how we can show a given vignette trial
   // TO DO: what else do we need to add to the trial procedure? What other information should we store? How can we turn this into a complete experiment timeline?
   var trial_scenario = {
