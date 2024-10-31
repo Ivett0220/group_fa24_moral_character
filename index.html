@@ -7,6 +7,7 @@
   <script src="https://unpkg.com/@jspsych/plugin-html-button-response@2.0.0"></script>
   <script src="https://unpkg.com/@jspsych/plugin-html-slider-response@2.0.0"></script>
   <script src="https://unpkg.com/@jspsych/plugin-survey-likert@2.0.0"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-fullscreen@1.2.1"></script>
   <!-- load in the vignette js-->
   <script src="stimuli/stimuli_vignette.js"></script>
   <link href="https://unpkg.com/jspsych@8.0.2/css/jspsych.css" rel="stylesheet" type="text/css" />
@@ -24,6 +25,12 @@
 
   /* create timeline */
   var timeline = [];
+
+  var full_screen = {
+    type: jsPsychFullScreen
+    full_screen_mode: true,
+  }
+
 
   /* load in stimulus list */
   // IDEA: store the vignette text as a variable in .js code (loaded above)
