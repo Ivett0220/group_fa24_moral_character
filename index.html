@@ -8,6 +8,8 @@
   <script src="https://unpkg.com/@jspsych/plugin-html-slider-response@2.0.0"></script>
   <script src="https://unpkg.com/@jspsych/plugin-survey-likert@2.0.0"></script>
   <script src="https://unpkg.com/@jspsych/plugin-fullscreen@1.2.1"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-survey-text@1.1.3"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-survey-html-form@2.0.0"></script>
   <!-- load in the vignette js-->
   <script src="stimuli/stimuli_vignette.js"></script>
   <link href="https://unpkg.com/jspsych@8.0.2/css/jspsych.css" rel="stylesheet" type="text/css" />
@@ -55,6 +57,23 @@
     "very quickly"
   ]
 
+
+  var trial = {
+    type: jsPsychSurveyHtmlForm,
+    html: `
+      <label>What is your age? <input name="age" type="number" required></label><br><br>
+      <label>What is your gender? 
+        <select name="gender" required>
+          <option value="" disabled selected>Select your option</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+      </label>
+    `
+  };
+  timeline.push(trial);
+  
   // here's how we can show a given vignette trial
   // TO DO: what else do we need to add to the trial procedure? What other information should we store? How can we turn this into a complete experiment timeline?
   var trial_scenario = {
