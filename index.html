@@ -61,6 +61,8 @@
   ]
 
 
+  /* Adding survey for data collection */
+
   var trial = {
     type: jsPsychSurveyHtmlForm,
     html: `
@@ -78,6 +80,18 @@
   };
   timeline.push(trial);
 
+      /* Instructions page */
+      var instructions = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `<p>Welcome to the study! Please follow the instructions carefully.</p>
+               <p>You will be presented with two short stories, each about a different individual.</p>
+               <p>After each story, you'll answer a series of questions by rating on a scale from 1 to 7.</p>
+               <p>Click 'Continue' to proceed.</p>`,
+    choices: ['Continue']
+  };
+  timeline.push(instructions);
+
+  
   // here's how we can show a given vignette trial
   // TO DO: what else do we need to add to the trial procedure? What other information should we store? How can we turn this into a complete experiment timeline?
   var trial_scenario = {
