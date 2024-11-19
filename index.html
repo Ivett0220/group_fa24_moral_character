@@ -13,6 +13,8 @@
   <!-- load in the vignette js-->
   <script src="stimuli/stimuli_vignette.js"></script>
   <link href="https://unpkg.com/jspsych@8.0.2/css/jspsych.css" rel="stylesheet" type="text/css" />
+  <!-- This is for data storage - please be sure to keep this script in all future updates to the code!! -->
+  <script src="https://unpkg.com/@jspsych-contrib/plugin-pipe"></script>
 </head>
 
 <body></body>
@@ -20,10 +22,23 @@
 
   /* initialize jsPsych */
   var jsPsych = initJsPsych({
-  on_finish: function() {
-    jsPsych.data.displayData();
-  }
-});
+    on_finish: function () {
+      jsPsych.data.displayData();
+    }
+  });
+
+  //PLEASE KEEP FOR ALL FUTURE ITERATIONS
+  //create a unique filename by combining a random string and a millisecond counter (to avoid duplicates)
+  var random_id = jsPsych.randomization.randomID(10);
+  const date = new Date();
+  random_id = "p"+random_id.toString();
+  var file_id = random_id + "_" + date.getTime().toString();
+  const filename = `${file_id}.csv`;
+  //also store the random id for convenience
+  jsPsych.data.addProperties({
+        random_id: random_id,
+      });
+  //PLEASE KEEP FOR ALL FUTURE ITERATIONS
 
   /* create timeline */
   var timeline = [];
@@ -42,7 +57,7 @@
   // each element in the variable VIGNETTES is one of the two prompts, structured as html
   // you can view the structure by looking in the console
   console.log(VIGNETTES)
-  
+
   //let's store one of these elements
   stimulus_item = VIGNETTES[0]
   console.log(stimulus_item)
@@ -68,9 +83,9 @@
     "",
     "",
     "very impulsive"
-];
+  ];
 
-var certainty_likert = [
+  var certainty_likert = [
     "very doubtful",
     "",
     "",
@@ -78,9 +93,9 @@ var certainty_likert = [
     "",
     "",
     "very certain"
-];
+  ];
 
-var moral_likert = [
+  var moral_likert = [
     "very immoral",
     "",
     "",
@@ -88,7 +103,7 @@ var moral_likert = [
     "",
     "",
     "very moral"
-];
+  ];
 
 
   /* Adding survey for data collection */
@@ -110,8 +125,8 @@ var moral_likert = [
   };
   timeline.push(trial);
 
-      /* Instructions page */
-      var instructions = {
+  /* Instructions page */
+  var instructions = {
     type: jsPsychHtmlButtonResponse,
     stimulus: `<p>Welcome to the study! Please follow the instructions carefully.</p>
                <p>You will be presented with two short stories, each about a different individual.</p>
@@ -125,48 +140,60 @@ var moral_likert = [
   // here's how we can show a given vignette trial
   // TO DO: what else do we need to add to the trial procedure? What other information should we store? How can we turn this into a complete experiment timeline?
   var trial_scenario = {
-        type: jsPsychHtmlButtonResponse,
-        //add the vignette as text at the top 
-        //(could also present the vignette integrated with the questions - what are the pros and cons of doing so?)
-        stimulus: stimulus_item['text'],
-        choices: ["Continue"],
-        // store elements from the stimulus item
-        data: { 
-          item_type: stimulus_item['item_type']
-        }
-      }
+    type: jsPsychHtmlButtonResponse,
+    //add the vignette as text at the top 
+    //(could also present the vignette integrated with the questions - what are the pros and cons of doing so?)
+    stimulus: stimulus_item['text'],
+    choices: ["Continue"],
+    // store elements from the stimulus item
+    data: {
+      item_type: stimulus_item['item_type']
+    }
+  }
   timeline.push(trial_scenario);
 
-// Justin's questions on one page
-var justin_manipulation_check = {
+  // Justin's questions on one page
+  var justin_manipulation_check = {
     type: jsPsychSurveyLikert,
     questions: [
-      
-      {prompt: "<p>On a scale from 1-7, what was Justin's emotional response in this situation?</p>", required: true, labels: impulsivity_likert, name: "justin_impulsivity_check"},
-      {prompt: "<p>On a scale from 1-7, how certain was Justin in his decision?</p>", required: true, labels: certainty_likert, name: "justin_impulsivity_check"},
-      {prompt: "<p>On a scale from 1-7, how quickly did Justin make his decision?</p>", required: true, labels: speed_likert, name: "justin_speed_check"},
-      {prompt: "<p>On a scale from 1-7, where would you place Justin's overall moral standards?</p>", required: true, labels: moral_likert, name: "justin_impulsivity_check"}
+
+      { prompt: "<p>On a scale from 1-7, what was Justin's emotional response in this situation?</p>", required: true, labels: impulsivity_likert, name: "justin_impulsivity_check" },
+      { prompt: "<p>On a scale from 1-7, how certain was Justin in his decision?</p>", required: true, labels: certainty_likert, name: "justin_impulsivity_check" },
+      { prompt: "<p>On a scale from 1-7, how quickly did Justin make his decision?</p>", required: true, labels: speed_likert, name: "justin_speed_check" },
+      { prompt: "<p>On a scale from 1-7, where would you place Justin's overall moral standards?</p>", required: true, labels: moral_likert, name: "justin_impulsivity_check" }
     ],
     scale_width: 400
-};
+  };
 
-// Nate's questions on the next page
-var nate_manipulation_check = {
+  // Nate's questions on the next page
+  var nate_manipulation_check = {
     type: jsPsychSurveyLikert,
     questions: [
-      
-      {prompt: "<p>On a scale from 1-7, what was Nate's emotional response in this situation?</p>", required: true, labels: impulsivity_likert, name: "nate_impulsivity_check"},
-      {prompt: "<p>On a scale from 1-7, how certain was Nate in his decision?</p>", required: true, labels: certainty_likert, name: "nate_impulsivity_check"},
-      {prompt: "<p>On a scale from 1-7, how quickly did Nate make his decision?</p>", required: true, labels: speed_likert, name: "nate_speed_check"},
-      {prompt: "<p>On a scale from 1-7, where would you place Nate's overall moral standards?</p>", required: true, labels: moral_likert, name: "nate_impulsivity_check"}
-    
+
+      { prompt: "<p>On a scale from 1-7, what was Nate's emotional response in this situation?</p>", required: true, labels: impulsivity_likert, name: "nate_impulsivity_check" },
+      { prompt: "<p>On a scale from 1-7, how certain was Nate in his decision?</p>", required: true, labels: certainty_likert, name: "nate_impulsivity_check" },
+      { prompt: "<p>On a scale from 1-7, how quickly did Nate make his decision?</p>", required: true, labels: speed_likert, name: "nate_speed_check" },
+      { prompt: "<p>On a scale from 1-7, where would you place Nate's overall moral standards?</p>", required: true, labels: moral_likert, name: "nate_impulsivity_check" }
+
     ],
     scale_width: 400
-};
+  };
 
-// Add these trials to the jsPsych timeline
-timeline.push(justin_manipulation_check);
-timeline.push(nate_manipulation_check);
+  // Add these trials to the jsPsych timeline
+  timeline.push(justin_manipulation_check);
+  timeline.push(nate_manipulation_check);
+
+  //PLEASE KEEP FOR ALL FUTURE ITERATIONS
+  //this portion of the code ensures that the data gets sent to be stored on OSF
+  const save_data = {
+    type: jsPsychPipe,
+    action: "save",
+    experiment_id: "oPoskIYymX6Y",
+    filename: filename,
+    data_string: () => jsPsych.data.get().csv()
+  };
+  timeline.push(save_data);
+  //PLEASE KEEP FOR ALL FUTURE ITERATIONS
 
 var ending = {
     type: jsPsychHtmlButtonResponse,
