@@ -112,7 +112,7 @@
     type: jsPsychSurveyHtmlForm,
     html: `
       <label>Enter your Participant ID (PID): <input name="pid" type="text" required></label><br><br>
-      <label>Enter your birth date (MM/DD/YY): <input name="birthdate" type="text" placeholder="MM/DD/YY" required></label><br><br>
+      <label>Enter your age: <input age="age" type="text" required></label><br><br>
       <label>What is your gender? 
         <select name="gender" required>
           <option value="" disabled selected>Select your option</option>
@@ -195,6 +195,7 @@
   timeline.push(save_data);
   //PLEASE KEEP FOR ALL FUTURE ITERATIONS
 
+  //Explanation of the experiment
 var ending = {
     type: jsPsychHtmlButtonResponse,
     stimulus: `<p>Congradulations! You have reached the end of the experiment.</p>
